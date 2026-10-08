@@ -1,0 +1,20 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+output-metadata.json
+gradle-*.zip
+.kotlin
+
+# Keystore files (Keep private keystores safe)
+*.jks
+*.keystore
+!example-keystore.jks

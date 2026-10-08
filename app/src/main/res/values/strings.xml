@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Fluid Tracker</string>
+    <string name="developer_name">Developed by S. M. Mahmud Iqbal</string>
+    <string name="widget_card_name">Fluid — Liquid Glass Hub</string>
+    <string name="widget_card_desc">Liquid glass card with live hydration gauge, science insights, and instant logging.</string>
+    <string name="widget_orb_name">Fluid — Quick Log Orb</string>
+    <string name="widget_orb_desc">Minimalist liquid glass orb for one-tap hydration logging.</string>
+    <string name="widget_pill_name">Fluid — Minimalist Pill</string>
+    <string name="widget_pill_desc">Compact horizontal liquid glass capsule tracker.</string>
+</resources>

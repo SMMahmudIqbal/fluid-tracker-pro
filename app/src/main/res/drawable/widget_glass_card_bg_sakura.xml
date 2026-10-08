@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer glass drop shadow / border glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="26dp" />
+            <solid android:color="#1AF472B6" />
+        </shape>
+    </item>
+    <!-- Deep Translucent Acrylic Glass Surface -->
+    <item android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="25dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="#E61A0D1D"
+                android:centerColor="#D9140A17"
+                android:endColor="#F20D060F" />
+            <stroke
+                android:width="1.2dp"
+                android:color="#3DF472B6" />
+        </shape>
+    </item>
+    <!-- Specular Reflection Sheen at Top of Glass -->
+    <item android:top="2dp" android:left="4dp" android:right="4dp" android:height="30dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="23dp"
+                android:topRightRadius="23dp"
+                android:bottomLeftRadius="8dp"
+                android:bottomRightRadius="8dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="#26FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

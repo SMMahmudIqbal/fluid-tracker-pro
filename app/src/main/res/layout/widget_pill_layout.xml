@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_pill_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_glass_pill_bg_celestial"
+    android:orientation="horizontal"
+    android:paddingStart="14dp"
+    android:paddingEnd="10dp"
+    android:gravity="center_vertical">
+
+    <!-- Volume & Progress Text -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widget_pill_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 / 2,000 ml"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_pill_streak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1D STREAK"
+            android:textColor="#38BDF8"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Slim Liquid Progress Bar -->
+    <ProgressBar
+        android:id="@+id/widget_pill_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_weight="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/widget_liquid_progress" />
+
+    <!-- Mini 3D Liquid Glass Orb Button -->
+    <FrameLayout
+        android:layout_width="38dp"
+        android:layout_height="38dp">
+
+        <ImageButton
+            android:id="@+id/widget_btn_add_pill"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/widget_orb_btn_water"
+            android:contentDescription="Quick Log 250ml" />
+    </FrameLayout>
+
+</LinearLayout>

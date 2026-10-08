@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer frosted glass glow halo -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#2438BDF8" />
+            <stroke android:width="1.5dp" android:color="#6638BDF8" />
+        </shape>
+    </item>
+    <!-- Liquid 3D Core Body -->
+    <item android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp">
+        <shape android:shape="oval">
+            <gradient
+                android:angle="135"
+                android:startColor="#38BDF8"
+                android:centerColor="#0284C7"
+                android:endColor="#0369A1" />
+        </shape>
+    </item>
+    <!-- Upper Specular Glare Reflection Sheen -->
+    <item android:top="3dp" android:left="6dp" android:right="6dp" android:height="16dp">
+        <shape android:shape="oval">
+            <gradient
+                android:angle="270"
+                android:startColor="#99FFFFFF"
+                android:centerColor="#40FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+    <!-- Centered Crisp Plus Icon -->
+    <item
+        android:top="10dp"
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:drawable="@drawable/ic_glass_plus" />
+</layer-list>
