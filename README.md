@@ -155,7 +155,7 @@ Google Play Protect automatically flags any newly released APK installed outside
 ## Release Verification & Keystore
 
 Official release builds are signed with dual **APK Signature Scheme v2 & v3**:
-* **Signer:** `CN=S. M. Mahmud Iqbal, OU=Mobile, O=FluidTracker, L=Dhaka, C=BD`
+* **Signer:** `CN=S. M. Mahmud Iqbal, OU=Mobile, O=FluidTracker`
 * **Algorithm:** RSA 2048-bit with SHA-256 digest
 * **Validity:** Through 2054 (28 years)
 * **Zipalign:** 4-byte boundary verified
