@@ -88,7 +88,7 @@ Every screen, modal, sheet, and home screen widget seamlessly adapts across 12 m
 Fluid Tracker Pro is built with an uncompromising commitment to privacy:
 * **Zero Network Permissions**: The app does **not** declare `android.permission.INTERNET`. It cannot connect to any external server.
 * **No Analytics or Trackers**: Completely free of Firebase, telemetry SDKs, trackers, or advertising beacons.
-* **Local DataStore Persistence**: Hydration records and preferences are encrypted and stored solely on your device via **Android Jetpack DataStore**.
+* **Local DataStore Persistence**: Hydration records and preferences are stored in the app's private directory via **Android Jetpack DataStore**. The app does not provide separate application-level encryption; protection at rest depends on Android's OS-level security. App backup is disabled.
 * **Complete User Ownership**: Export your data or wipe all records with a single tap.
 
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md) for full legal documentation.
@@ -147,6 +147,7 @@ Google Play Protect automatically flags any newly released APK installed outside
    ```bash
    ./gradlew assembleRelease
    ```
+   Release signing requires `FLUID_RELEASE_KEYSTORE_PATH`, `FLUID_RELEASE_STORE_PASSWORD`, `FLUID_RELEASE_KEY_ALIAS`, and `FLUID_RELEASE_KEY_PASSWORD` as protected environment variables or Gradle properties. Keep the keystore and secret values outside Git; the build fails rather than using default credentials if any are missing.
    The compiled APK will be output to:
    `app/build/outputs/apk/release/app-release.apk`
 

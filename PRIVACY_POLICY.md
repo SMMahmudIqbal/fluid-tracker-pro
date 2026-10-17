@@ -14,7 +14,7 @@ The application collects **zero** personal telemetry, transmits **no data** over
 ---
 
 ## 2. Information Storage & Processing
-- **100% On-Device Local Storage:** All hydration logs, user profile names, daily water intake targets, streak records, vitality scores, and theme preferences are saved locally on your device using encrypted Android Jetpack DataStore.
+- **On-Device Local Storage:** Hydration logs, user profile names, daily water intake targets, streak records, vitality scores, and theme preferences are saved in the app's private storage using Android Jetpack DataStore. The app does not implement separate application-level encryption; protection at rest depends on the Android device's OS-level security. Android app backup is disabled.
 - **No Cloud Servers:** Fluid Tracker Pro does not operate remote servers, cloud databases, or third-party synchronization services. Your data never leaves your device sandbox.
 - **No Third-Party Analytics or Trackers:** The application contains zero advertising SDKs, tracking pixels, crash analytics beacons, or third-party telemetry tools.
 
