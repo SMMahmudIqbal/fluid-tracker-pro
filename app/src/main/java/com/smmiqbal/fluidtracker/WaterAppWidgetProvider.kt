@@ -3,6 +3,7 @@ package com.smmiqbal.fluidtracker
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -187,7 +188,7 @@ class WaterAppWidgetProvider : AppWidgetProvider() {
                 )
 
                 // PendingIntent for Quick Add Button (+250ml)
-                val addIntent = Intent(context, WaterAppWidgetProvider::class.java).apply {
+                val addIntent = Intent(context, AddWaterWidgetReceiver::class.java).apply {
                     action = ACTION_ADD_WATER
                 }
                 val pendingAdd = PendingIntent.getBroadcast(
@@ -217,34 +218,6 @@ class WaterAppWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == ACTION_ADD_WATER) {
-            val pendingResult = goAsync()
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val repo = WaterRepository(context)
-                    repo.addIntake(250)
-                    val totalMl = repo.totalVolumeMl.first()
-                    val goalMl = repo.goalVolumeMl.first()
-
-                    SoundHelper.playWaterDropSound()
-                    SoundHelper.triggerHapticFeedback(context)
-
-                    Handler(Looper.getMainLooper()).post {
-                        val toastMsg = if (totalMl >= goalMl) {
-                            "Logged 250ml ($totalMl ml). Daily target reached!"
-                        } else {
-                            "Logged 250ml ($totalMl / $goalMl ml)"
-                        }
-                        Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
-                    }
-
-                    // Immediately synchronize all widgets on screen
-                    updateAllWidgets(context)
-                } finally {
-                    pendingResult.finish()
-                }
-            }
-        }
     }
 }
 
@@ -287,7 +260,7 @@ class WaterQuickOrbWidgetProvider : AppWidgetProvider() {
                     WidgetThemeHelper.getOrbButtonDrawable()
                 )
 
-                val addIntent = Intent(context, WaterQuickOrbWidgetProvider::class.java).apply {
+                val addIntent = Intent(context, AddWaterWidgetReceiver::class.java).apply {
                     action = ACTION_ADD_WATER_ORB
                 }
                 val pendingAdd = PendingIntent.getBroadcast(
@@ -316,34 +289,6 @@ class WaterQuickOrbWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == ACTION_ADD_WATER_ORB) {
-            val pendingResult = goAsync()
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val repo = WaterRepository(context)
-                    repo.addIntake(250)
-                    val totalMl = repo.totalVolumeMl.first()
-                    val goalMl = repo.goalVolumeMl.first()
-
-                    SoundHelper.playWaterDropSound()
-                    SoundHelper.triggerHapticFeedback(context)
-
-                    Handler(Looper.getMainLooper()).post {
-                        val toastMsg = if (totalMl >= goalMl) {
-                            "Logged 250ml ($totalMl ml). Daily target reached!"
-                        } else {
-                            "Logged 250ml ($totalMl / $goalMl ml)"
-                        }
-                        Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
-                    }
-
-                    // Immediately synchronize all widgets on screen
-                    WaterAppWidgetProvider.updateAllWidgets(context)
-                } finally {
-                    pendingResult.finish()
-                }
-            }
-        }
     }
 }
 
@@ -391,7 +336,7 @@ class WaterMinimalPillWidgetProvider : AppWidgetProvider() {
                     WidgetThemeHelper.getOrbButtonDrawable()
                 )
 
-                val addIntent = Intent(context, WaterMinimalPillWidgetProvider::class.java).apply {
+                val addIntent = Intent(context, AddWaterWidgetReceiver::class.java).apply {
                     action = ACTION_ADD_WATER_PILL
                 }
                 val pendingAdd = PendingIntent.getBroadcast(
@@ -420,32 +365,41 @@ class WaterMinimalPillWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == ACTION_ADD_WATER_PILL) {
-            val pendingResult = goAsync()
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val repo = WaterRepository(context)
-                    repo.addIntake(250)
-                    val totalMl = repo.totalVolumeMl.first()
-                    val goalMl = repo.goalVolumeMl.first()
+    }
+}
 
-                    SoundHelper.playWaterDropSound()
-                    SoundHelper.triggerHapticFeedback(context)
+/** Handles widget intake only through an explicit, non-exported app receiver. */
+class AddWaterWidgetReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val action = intent.action ?: return
+        if (action !in setOf(
+                WaterAppWidgetProvider.ACTION_ADD_WATER,
+                WaterQuickOrbWidgetProvider.ACTION_ADD_WATER_ORB,
+                WaterMinimalPillWidgetProvider.ACTION_ADD_WATER_PILL
+            )) return
 
-                    Handler(Looper.getMainLooper()).post {
-                        val toastMsg = if (totalMl >= goalMl) {
-                            "Logged 250ml ($totalMl ml). Daily target reached!"
-                        } else {
-                            "Logged 250ml ($totalMl / $goalMl ml)"
-                        }
-                        Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+        val pendingResult = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val repo = WaterRepository(context)
+                repo.addIntake(250)
+                val totalMl = repo.totalVolumeMl.first()
+                val goalMl = repo.goalVolumeMl.first()
+
+                SoundHelper.playWaterDropSound()
+                SoundHelper.triggerHapticFeedback(context)
+
+                Handler(Looper.getMainLooper()).post {
+                    val toastMsg = if (totalMl >= goalMl) {
+                        "Logged 250ml ($totalMl ml). Daily target reached!"
+                    } else {
+                        "Logged 250ml ($totalMl / $goalMl ml)"
                     }
-
-                    // Immediately synchronize all widgets on screen
-                    WaterAppWidgetProvider.updateAllWidgets(context)
-                } finally {
-                    pendingResult.finish()
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
                 }
+                WaterAppWidgetProvider.updateAllWidgets(context)
+            } finally {
+                pendingResult.finish()
             }
         }
     }
